@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image and Text Carousel</title>
+    <title>I Am Mike Beeh</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -53,9 +53,37 @@
             padding: 10px;
             cursor: pointer;
         }
+            .banner {
+                width: 100%;
+                overflow: hidden;
+                background-color: #ff0000;
+                padding: 10px 0;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 1000;
+            }
+            .banner a {
+                display: inline-block;
+                white-space: nowrap;
+                animation: scroll-left 20s linear infinite;
+                color: #ffffff;
+                font-size: 24px;
+                font-weight: bold;
+                text-decoration: none;
+            }
+            @keyframes scroll-left {
+                0% { transform: translateX(100%); }
+                100% { transform: translateX(-100%); }
+            }
+        
     </style>
 </head>
 <body>
+
+    <div class="banner">
+        <a href="marketplace.html">CARD SHOP NOW OPEN!!!! CARD SHOP NOW OPEN!!!! CARD SHOP NOW OPEN!!!!</a>
+    </div>
 
 <div class="carousel">
     <div class="carousel-inner">

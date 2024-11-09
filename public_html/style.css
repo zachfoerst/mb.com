@@ -9,3 +9,27 @@
 .image-container img {
     border-radius: 50%;
 }
+
+    .banner {
+        width: 100%;
+        overflow: hidden;
+        background-color: #ff0000;
+        padding: 10px 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
+    .banner a {
+        display: inline-block;
+        white-space: nowrap;
+        animation: scroll-left 20s linear infinite;
+        color: #ffffff;
+        font-size: 24px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    @keyframes scroll-left {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
