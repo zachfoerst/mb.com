@@ -166,6 +166,7 @@
 
     <h2>Conclusion</h2>
     <p>The 2024 Chevrolet Traverse offers more power, space, and slightly better fuel economy. It's ideal for those who prioritize cargo capacity and performance. The 2024 Hyundai Palisade, while slightly smaller, provides a more premium feel and a lower starting price. Your choice will depend on your specific needs and preferences.</p>
+    
     <h2>Vote for Your Preference</h2>
     <div class="voting-section">
         <div class="vote-box">
@@ -186,16 +187,41 @@
     </div>
 
     <script>
-        const votes = {
+        let votes = {
             traverse: 0,
             palisade: 0,
             current: 0
         };
 
+        // Load votes from localStorage when the page loads
+        function loadVotes() {
+            const storedVotes = localStorage.getItem('carVotes');
+            if (storedVotes) {
+                votes = JSON.parse(storedVotes);
+                updateVoteDisplay();
+            }
+        }
+
+        // Save votes to localStorage
+        function saveVotes() {
+            localStorage.setItem('carVotes', JSON.stringify(votes));
+        }
+
         function vote(car) {
             votes[car]++;
-            document.getElementById(`${car}-votes`).textContent = votes[car];
+            updateVoteDisplay();
+            saveVotes();
         }
+
+        function updateVoteDisplay() {
+            document.getElementById('traverse-votes').textContent = votes.traverse;
+            document.getElementById('palisade-votes').textContent = votes.palisade;
+            document.getElementById('current-votes').textContent = votes.current;
+        }
+
+        // Load votes when the page loads
+        loadVotes();
     </script>
+
 </body>
 </html>
