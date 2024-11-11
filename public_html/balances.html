@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Account Balances</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        .balance {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        #jointAccount {
+            color: #e74c3c;
+        }
+        #wifeAccount {
+            color: #2ecc71;
+        }
+        #message {
+            color: #3498db;
+            font-style: italic;
+            margin-top: 10px;
+        }
+        #lastTransaction {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .back-link {
+            display: block;
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #2980b9; /* Link color */
+            text-decoration: none; /* Remove underline */
+        }
+        .back-link:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+        .update-notice {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #e67e22; /* Notice color */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">Take me back to finding a waifu!</a>
+        <div class="update-notice">Updates are delayed up to 10 seconds, please be patient.</div>
+        <h2>Bank Account Balances</h2>
+        <div class="balance">Joint Account: $<span id="jointAccount">3789.00</span></div>
+        <div class="balance">Wife's Account: $<span id="wifeAccount">8893.89</span></div>
+        <div id="message"></div>
+        <div id="lastTransaction"></div>
+    </div>
+
+    <script>
+        let jointBalance = 3789.00;
+        let wifeBalance = 8893.89;
+        let decreaseCount = 0;
+
+        function updateBalances() {
+            // Generate a random amount between 1.00 and 100.99
+            const amount = (Math.floor(Math.random() * 10000) + 100) / 100;
+
+            jointBalance = Math.max(0, jointBalance - amount);
+            wifeBalance += amount;
+            decreaseCount++;
+
+            document.getElementById('jointAccount').textContent = jointBalance.toFixed(2);
+            document.getElementById('wifeAccount').textContent = wifeBalance.toFixed(2);
+            document.getElementById('message').textContent = '';
+            document.getElementById('lastTransaction').textContent = `Last transaction: -$${amount.toFixed(2)}`;
+
+            if (decreaseCount === 4) {
+                jointBalance += 500;
+                document.getElementById('jointAccount').textContent = jointBalance.toFixed(2);
+                document.getElementById('message').textContent = 'Joint account received $500 deposit!';
+                decreaseCount = 0;
+            }
+
+            // Set a random interval between 3 and 10 seconds for the next update
+            const nextInterval = Math.floor(Math.random() * (10000 - 3000 + 1)) + 3000;
+            setTimeout(updateBalances, nextInterval);
+        }
+
+        // Initial call to start the process
+        setTimeout(updateBalances, Math.floor(Math.random() * (10000 - 3000 + 1)) + 3000);
+    </script>
+</body>
+</html>
