@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Days Since Counter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .calendar {
+            width: 300px;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden; /* Ensures rounded corners are respected */
+        }
+        .calendar-header {
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            font-size: 1.2em;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            width: 100%;
+        }
+        .calendar-days {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+        .calendar-days div,
+        .calendar-dates div {
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .calendar-dates {
+            background-color: white;
+        }
+        .today {
+            background-color: #ffdd57;
+            font-weight: bold;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+        }
+        #counter {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Miss My Friends</h1>
+    <div class="calendar">
+        <div class="calendar-header" id="month-year"></div>
+        <div class="calendar-grid calendar-days">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+        </div>
+        <div class="calendar-grid calendar-dates" id="calendar-dates"></div>
+    </div>
+
+    <button onclick="startCounter()">Start Counter</button>
+    <div id="counter"></div>
+
+    <script>
+        const defaultDate = '2024-11-21';
+        let startDate = localStorage.getItem('startDate') || defaultDate;
+
+        function renderCalendar() {
+            const monthYear = document.getElementById('month-year');
+            const calendarDates = document.getElementById('calendar-dates');
+            
+            const today = new Date();
+            const currentMonth = today.getMonth();
+            const currentYear = today.getFullYear();
+
+            monthYear.textContent = `${today.toLocaleString('default', { month: 'long' })} ${currentYear}`;
+            
+            const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+            calendarDates.innerHTML = '';
+
+            // Create blanks for days of the week before the first day
+            for (let i = 0; i < firstDayOfMonth; i++) {
+                calendarDates.appendChild(document.createElement('div'));
+            }
+
+            // Populate the days
+            for (let i = 1; i <= daysInMonth; i++) {
+                const dayDiv = document.createElement('div');
+                dayDiv.textContent = i;
+
+                // Highlight today's date
+                if (i === today.getDate() && today.getMonth() === currentMonth) {
+                    dayDiv.classList.add('today');
+                }
+
+                calendarDates.appendChild(dayDiv);
+            }
+        }
+
+        function startCounter() {
+            startDate = new Date(startDate);
+            localStorage.setItem('startDate', startDate.toISOString().split('T')[0]);
+            updateCounter();
+        }
+
+        function updateCounter() {
+            const start = new Date(startDate);
+            const today = new Date();
+            const diffTime = Math.abs(today - start);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            document.getElementById('counter').textContent =
+                `Days since my friends stopped talking to me: ${diffDays}`;
+        }
+
+        // Initialize calendar and counter on page load
+        renderCalendar();
+        updateCounter();
+    </script>
+</body>
+</html>
